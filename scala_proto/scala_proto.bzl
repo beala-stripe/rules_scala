@@ -417,8 +417,7 @@ def _gen_proto_srcjar_impl(ctx):
         # Command line args to worker cannot be empty so using padding
         flags_arg = "-" + ",".join(ctx.attr.flags),
         # Command line args to worker cannot be empty so using padding
-        packages = "-" +
-                   ":".join(depset(transitive = transitive_proto_paths).to_list()),
+        packages = "-",
         # Pass inputs seprately because they doesn't always match to imports (ie blacklisted protos are excluded)
         inputs = ":".join(sorted([f.path for f in _retained_protos(acc_imports, ctx.attr.blacklisted_protos)]))
     )
