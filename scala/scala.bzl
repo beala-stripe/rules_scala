@@ -35,7 +35,7 @@ load(
 
 _launcher_template = {
     "_java_stub_template": attr.label(
-        default = Label("@java_stub_template//file"),
+        default = Label("@java_stub_template//:file"),
     ),
 }
 
@@ -491,12 +491,20 @@ def scala_repositories(
     # Using this and not the bazel regular one due to issue when classpath is too long
     # until https://github.com/bazelbuild/bazel/issues/6955 is resolved
     if native.existing_rule("java_stub_template") == None:
-      http_archive(
-                name = "java_stub_template",
-                sha256 = "4a72985658af01236a232b2b6dfda9bcaaa03b4da2115405bfb0de64ccd4f781",
-                urls = ["https://github.com/bazelbuild/rules_scala/archive/75217c13f73aefb9e9e90fc6346f9c7e1ceed426.zip"],
-                strip_prefix = "rules_scala-75217c13f73aefb9e9e90fc6346f9c7e1ceed426/java_stub_template",
-      )
+        http_archive(
+            name = "java_stub_template",
+            #sha256 = "4a72985658af01236a232b2b6dfda9bcaaa03b4da2115405bfb0de64ccd4f781",
+            urls = ["https://github.com/bazelbuild/bazel/archive/e9521d32ea97615446109256e26c3db0d6714719.tar.gz"],
+            strip_prefix = "bazel-e9521d32ea97615446109256e26c3db0d6714719/src/main/java/com/google/devtools/build/lib/bazel/rules/java",
+            build_file_content="""
+        filegroup(
+            name = "file",
+            srcs = ["java_stub_template.txt"],
+            visibility = ["//visibility:public"],
+        )
+        """,
+            #workspace_file_content="",
+        )
 
     native.bind(
         name = "io_bazel_rules_scala/dependency/com_google_protobuf/protobuf_java",
