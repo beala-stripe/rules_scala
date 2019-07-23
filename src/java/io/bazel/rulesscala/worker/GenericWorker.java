@@ -31,8 +31,14 @@ public class GenericWorker {
 
     while (true) {
       try {
+        System.out.println("About to parse");
+        System.out.flush();
         WorkRequest request = WorkRequest.parseDelimitedFrom(System.in);
+        System.out.println("Done parsing");
+        System.out.flush();
         if (request == null) {
+          System.out.println("Breaking");
+          System.out.flush();
           break;
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
