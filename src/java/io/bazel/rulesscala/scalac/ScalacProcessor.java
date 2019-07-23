@@ -43,6 +43,7 @@ class ScalacProcessor implements Processor {
       CompileOptions ops = new CompileOptions(args);
 
       System.out.println("Point 1");
+      System.out.flush();
 
       Path outputPath = FileSystems.getDefault().getPath(ops.outputName);
       tmpPath = Files.createTempDirectory(outputPath.getParent(), "tmp");
@@ -59,6 +60,7 @@ class ScalacProcessor implements Processor {
       String[] scalaSources = collectSrcJarSources(ops.files, scalaJarFiles, javaJarFiles);
 
       System.out.println("Point 2");
+      System.out.flush();
 
       String[] javaSources = GenericWorker.appendToString(ops.javaFiles, javaJarFiles);
       if (scalaSources.length == 0 && javaSources.length == 0) {
@@ -74,27 +76,32 @@ class ScalacProcessor implements Processor {
       }
 
       System.out.println("Point 3");
+      System.out.flush();
 
       /** Copy the resources */
       copyResources(ops.resourceFiles, ops.resourceStripPrefix, tmpPath);
 
       System.out.println("Point 4");
+      System.out.flush();
 
       /** Extract and copy resources from resource jars */
       copyResourceJars(ops.resourceJars, tmpPath);
 
       System.out.println("Point 5");
+      System.out.flush();
 
       /** Copy classpath resources to root of jar */
       copyClasspathResourcesToRoot(ops.classpathResourceFiles, tmpPath);
 
       System.out.println("Point 6");
+      System.out.flush();
 
       /** Now build the output jar */
       String[] jarCreatorArgs = {"-m", ops.manifestPath, outputPath.toString(), tmpPath.toString()};
       JarCreator.main(jarCreatorArgs);
 
       System.out.println("Point 7");
+      System.out.flush();
     } finally {
       removeTmp(tmpPath);
     }
