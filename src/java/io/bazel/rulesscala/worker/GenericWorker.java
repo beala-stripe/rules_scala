@@ -31,14 +31,14 @@ public class GenericWorker {
 
     while (true) {
       try {
-        System.out.println("About to parse");
-        System.out.flush();
+        System.err.println("About to parse");
+        System.err.flush();
         WorkRequest request = WorkRequest.parseDelimitedFrom(System.in);
-        System.out.println("Done parsing");
-        System.out.flush();
+        System.err.println("Done parsing");
+        System.err.flush();
         if (request == null) {
-          System.out.println("Breaking");
-          System.out.flush();
+          System.err.println("Breaking");
+          System.err.flush();
           break;
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -48,11 +48,11 @@ public class GenericWorker {
           setupOutput(ps);
 
           try {
-            System.out.println("Kicking off request");
-            System.out.flush();
+            System.err.println("Kicking off request");
+            System.err.flush();
             processor.processRequest(request.getArgumentsList());
-            System.out.println("Done with request");
-            System.out.flush();
+            System.err.println("Done with request");
+            System.err.flush();
           } catch (Exception e) {
             e.printStackTrace();
             System.err.flush();
