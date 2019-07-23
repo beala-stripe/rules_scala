@@ -102,6 +102,10 @@ class ScalacProcessor implements Processor {
 
       System.out.println("Point 7");
       System.out.flush();
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.flush();
+      throw e;
     } finally {
       removeTmp(tmpPath);
     }

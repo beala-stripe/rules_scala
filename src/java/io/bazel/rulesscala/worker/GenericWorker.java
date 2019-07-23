@@ -42,9 +42,14 @@ public class GenericWorker {
           setupOutput(ps);
 
           try {
+            System.out.println("Kicking off request");
+            System.out.flush();
             processor.processRequest(request.getArgumentsList());
+            System.out.println("Done with request");
+            System.out.flush();
           } catch (Exception e) {
             e.printStackTrace();
+            System.err.flush();
             exitCode = 1;
           }
         } finally {
@@ -58,6 +63,10 @@ public class GenericWorker {
             .build()
             .writeDelimitedTo(System.out);
         System.out.flush();
+      } catch (Exception e) {
+        e.printStackTrace();
+        System.err.flush();
+        throw e;
       } finally {
         System.gc();
       }
