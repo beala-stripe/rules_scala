@@ -70,6 +70,7 @@ _implicit_deps = {
         default = Label(
             "@io_bazel_rules_scala//src/java/io/bazel/rulesscala/scalac",
         ),
+        cfg = "host",
     ),
     "_exe": attr.label(
         executable = True,
